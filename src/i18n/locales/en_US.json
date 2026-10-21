@@ -105,6 +105,8 @@
                 "history_disable": "Disable History",
                 "incremental_translate": "Incremental Translation",
                 "dynamic_translate": "Dynamic Translation",
+                "selection_icon": "Show Icon After Selecting Text",
+                "auto_speak": "Speak Selected Text Automatically",
                 "delete_newline": "Delete Newline",
                 "remember_language": "Remember Target Language",
                 "font_size": {
@@ -433,6 +435,9 @@
                 }
             },
             "tts": {
+                "google_tts": {
+                    "title": "Google"
+                },
                 "lingva_tts": {
                     "title": "Lingva",
                     "request_path": "Request Path"

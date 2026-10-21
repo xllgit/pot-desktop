@@ -9,6 +9,7 @@ mod error;
 mod hotkey;
 mod lang_detect;
 mod screenshot;
+mod selection_icon;
 mod server;
 mod system_ocr;
 mod tray;
@@ -24,6 +25,7 @@ use lang_detect::*;
 use log::info;
 use once_cell::sync::OnceCell;
 use screenshot::screenshot;
+use selection_icon::*;
 use server::*;
 use std::sync::Mutex;
 use system_ocr::*;
@@ -125,6 +127,7 @@ fn main() {
                 clipboard_monitor.to_string(),
             )));
             start_clipboard_monitor(app.handle());
+            start_selection_icon_monitor();
             Ok(())
         })
         .invoke_handler(tauri::generate_handler![
@@ -147,7 +150,8 @@ fn main() {
             local,
             install_plugin,
             font_list,
-            aliyun
+            aliyun,
+            selection_icon_translate
         ])
         .on_system_tray_event(tray_event_handler)
         .build(tauri::generate_context!())

@@ -22,6 +22,8 @@ export default function Translate() {
     const [incrementalTranslate, setIncrementalTranslate] = useConfig('incremental_translate', false);
     const [historyDisable, setHistoryDisable] = useConfig('history_disable', false);
     const [dynamicTranslate, setDynamicTranslate] = useConfig('dynamic_translate', false);
+    const [selectionIcon, setSelectionIcon] = useConfig('selection_icon', false);
+    const [autoSpeak, setAutoSpeak] = useConfig('translate_auto_speak', false);
     const [deleteNewline, setDeleteNewline] = useConfig('translate_delete_newline', false);
     const [rememberLanguage, setRememberLanguage] = useConfig('translate_remember_language', false);
     // const [translateFontSize, setTranslateFontSize] = useConfig('translate_font_size', 16);
@@ -185,6 +187,28 @@ export default function Translate() {
                                 isSelected={dynamicTranslate}
                                 onValueChange={(v) => {
                                     setDynamicTranslate(v);
+                                }}
+                            />
+                        )}
+                    </div>
+                    <div className='config-item'>
+                        <h3 className='my-auto mx-0'>{t('config.translate.selection_icon')}</h3>
+                        {selectionIcon !== null && (
+                            <Switch
+                                isSelected={selectionIcon}
+                                onValueChange={(v) => {
+                                    setSelectionIcon(v);
+                                }}
+                            />
+                        )}
+                    </div>
+                    <div className='config-item'>
+                        <h3 className='my-auto mx-0'>{t('config.translate.auto_speak')}</h3>
+                        {autoSpeak !== null && (
+                            <Switch
+                                isSelected={autoSpeak}
+                                onValueChange={(v) => {
+                                    setAutoSpeak(v);
                                 }}
                             />
                         )}

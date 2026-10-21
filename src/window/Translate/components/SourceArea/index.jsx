@@ -39,7 +39,8 @@ export default function SourceArea(props) {
     const [deleteNewline] = useConfig('translate_delete_newline', false);
     const [recognizeLanguage] = useConfig('recognize_language', 'auto');
     const [recognizeServiceList] = useConfig('recognize_service_list', ['system', 'tesseract']);
-    const [ttsServiceList] = useConfig('tts_service_list', ['lingva_tts']);
+    const [ttsServiceList] = useConfig('tts_service_list', ['google_tts']);
+    const [autoSpeak] = useConfig('translate_auto_speak', false);
     const [hideWindow] = useConfig('translate_hide_window', false);
     const [hideSource] = useConfig('hide_source', false);
     const [ttsPluginInfo, setTtsPluginInfo] = useState();
@@ -159,8 +160,9 @@ export default function SourceArea(props) {
             } else {
                 setSourceText(newText);
             }
-            detect_language(newText).then(() => {
+            detect_language(newText).then((detected) => {
                 syncSourceText();
+                autoSpeakRef.current(newText, detected);
             });
         }
     };
@@ -177,11 +179,10 @@ export default function SourceArea(props) {
         }
     };
 
-    const handleSpeak = async () => {
+    const handleSpeak = async (text = sourceText, detected = detectLanguage) => {
         const instanceKey = ttsServiceList[0];
-        let detected = detectLanguage;
         if (detected === '') {
-            detected = await detect(sourceText);
+            detected = await detect(text);
             setDetectLanguage(detected);
         }
         if (getServiceSouceType(instanceKey) === ServiceSourceType.PLUGIN) {
@@ -190,7 +191,7 @@ export default function SourceArea(props) {
             }
             const pluginConfig = serviceInstanceConfigMap[instanceKey];
             let [func, utils] = await invoke_plugin('tts', getServiceName(instanceKey));
-            let data = await func(sourceText, ttsPluginInfo.language[detected], {
+            let data = await func(text, ttsPluginInfo.language[detected], {
                 config: pluginConfig,
                 utils,
             });
@@ -201,7 +202,7 @@ export default function SourceArea(props) {
             }
             const instanceConfig = serviceInstanceConfigMap[instanceKey];
             let data = await builtinTtsServices[getServiceName(instanceKey)].tts(
-                sourceText,
+                text,
                 builtinTtsServices[getServiceName(instanceKey)].Language[detected],
                 {
                     config: instanceConfig,
@@ -209,6 +210,17 @@ export default function SourceArea(props) {
             );
             speak(data);
         }
+    };
+
+    // Read through a ref because the new_text listener keeps the closure of an old render
+    const autoSpeakRef = useRef();
+    autoSpeakRef.current = (text, detected) => {
+        if (!autoSpeak || text === '') {
+            return;
+        }
+        handleSpeak(text, detected).catch((e) => {
+            toast.error(e.toString(), { style: toastStyle });
+        });
     };
 
     useEffect(() => {
@@ -241,13 +253,15 @@ export default function SourceArea(props) {
             incrementalTranslate !== null &&
             recognizeLanguage !== null &&
             recognizeServiceList !== null &&
+            ttsServiceList !== null &&
+            autoSpeak !== null &&
             hideWindow !== null
         ) {
             invoke('get_text').then((v) => {
                 handleNewText(v);
             });
         }
-    }, [deleteNewline, incrementalTranslate, recognizeLanguage, recognizeServiceList, hideWindow]);
+    }, [deleteNewline, incrementalTranslate, recognizeLanguage, recognizeServiceList, ttsServiceList, autoSpeak, hideWindow]);
 
     useEffect(() => {
         textAreaRef.current.style.height = '50px';
@@ -255,7 +269,9 @@ export default function SourceArea(props) {
     }, [sourceText]);
 
     const detect_language = async (text) => {
-        setDetectLanguage(await detect(text));
+        const detected = await detect(text);
+        setDetectLanguage(detected);
+        return detected;
     };
 
     let sourceTextChangeTimer = null;

@@ -105,6 +105,8 @@
                 "history_disable": "禁用历史记录",
                 "incremental_translate": "增量翻译",
                 "dynamic_translate": "动态翻译",
+                "selection_icon": "划词后显示翻译图标",
+                "auto_speak": "自动朗读划词文本",
                 "delete_newline": "自动删除换行",
                 "remember_language": "记住目标语言",
                 "font_size": {
@@ -433,6 +435,9 @@
                 }
             },
             "tts": {
+                "google_tts": {
+                    "title": "谷歌"
+                },
                 "lingva_tts": {
                     "title": "Lingva",
                     "request_path": "请求地址"

@@ -6,6 +6,7 @@ import React, { useEffect } from 'react';
 import { useTheme } from 'next-themes';
 
 import { invoke } from '@tauri-apps/api/tauri';
+import SelectionIcon from './window/SelectionIcon';
 import Screenshot from './window/Screenshot';
 import Translate from './window/Translate';
 import Recognize from './window/Recognize';
@@ -22,6 +23,7 @@ const windowMap = {
     recognize: <Recognize />,
     config: <Config />,
     updater: <Updater />,
+    selection_icon: <SelectionIcon />,
 };
 
 export default function App() {

@@ -105,6 +105,8 @@
                 "history_disable": "停用歷史記錄",
                 "incremental_translate": "增量翻譯",
                 "dynamic_translate": "動態翻譯",
+                "selection_icon": "劃詞後顯示翻譯圖示",
+                "auto_speak": "自動朗讀劃詞文本",
                 "delete_newline": "自動刪除換行",
                 "remember_language": "記住目標語言",
                 "window_position": "視窗位置",
@@ -430,6 +432,9 @@
                 }
             },
             "tts": {
+                "google_tts": {
+                    "title": "Google"
+                },
                 "lingva_tts": {
                     "title": "Lingva",
                     "request_path": "請求路徑"
