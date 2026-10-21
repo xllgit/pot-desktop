@@ -1,3 +1,19 @@
+> [!NOTE]
+> **This is a fork of [pot-app/pot-desktop](https://github.com/pot-app/pot-desktop) with Easydict-style mouse selection translation.**
+>
+> **What's new in this fork**
+>
+> - **Selection icon (like [Easydict](https://github.com/tisfeng/Easydict))**: select text in any app by dragging, double-clicking, triple-clicking or shift+clicking, and a small pot icon appears next to the mouse. Hover over (or click) the icon to translate the selection. The icon goes away when you click elsewhere, press a key or move the mouse away from it.
+>   Turn it on in **Config → Translate → Show Icon After Selecting Text**.
+> - **Google TTS**: a new built-in text-to-speech service (American English voice for English), now the default because the server used by Lingva TTS no longer works.
+> - **Speak selected text automatically**: optional, in **Config → Translate → Speak Selected Text Automatically**.
+>
+> **Download (Windows 10/11, x64)**: [pot_3.0.7_x64-setup.exe](https://github.com/xllgit/pot-desktop/releases/latest/download/pot_3.0.7_x64-setup.exe) · [all releases](https://github.com/xllgit/pot-desktop/releases)
+>
+> - The installer is not code-signed, so Windows SmartScreen may warn you. Click **More info → Run anyway**.
+> - Turn off **Config → General → Check Update**, otherwise the official updater may replace this build with an upstream version that doesn't have these features.
+> - Only the Windows build has been released. On Linux the selection icon needs X11/XWayland, and on macOS it needs Accessibility permission.
+
 <img width="200px" src="public/icon.svg" align="left"/>
 
 # Pot (A cute translator)
